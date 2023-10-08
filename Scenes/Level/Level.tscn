@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://dyv2ur4fhawei"]
+
+[ext_resource type="PackedScene" uid="uid://h6wwryu55lbt" path="res://Scenes/Objects/Ground.tscn" id="1_wy3bm"]
+[ext_resource type="PackedScene" uid="uid://5to0yxf82frc" path="res://Scenes/Objects/Player.tscn" id="2_thfyk"]
+[ext_resource type="PackedScene" uid="uid://cddj361bsvqdo" path="res://Scenes/Objects/Coin.tscn" id="3_w5oej"]
+[ext_resource type="Script" path="res://Scenes/Level/spwaner.gd" id="4_43ugr"]
+[ext_resource type="Script" path="res://Scripts/Coin spawner.gd" id="4_h26qi"]
+
+[node name="Level" type="Node3D"]
+
+[node name="Ground" parent="." instance=ExtResource("1_wy3bm")]
+transform = Transform3D(12.7845, 0, 0, 0, 0.262724, 0, 0, 0, 5.8661, 0, 0, 0)
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.964031, 0.265792, 0, -0.265792, 0.964031, 0, 2.88658, 5.45066)
+
+[node name="Sun (Tatum)" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.644591, 0.764528, 0, -0.764528, 0.644591, 0, 0.776506, 0.360899)
+
+[node name="Player" parent="." instance=ExtResource("2_thfyk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.100435, 1.15461, 0)
+
+[node name="Coin spawner" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+script = ExtResource("4_h26qi")
+
+[node name="Timer" type="Timer" parent="Coin spawner"]
+process_callback = 0
+autostart = true
+script = ExtResource("4_43ugr")
+
+[node name="Coin" parent="." instance=ExtResource("3_w5oej")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.48629, 0)
+
+[connection signal="timeout" from="Coin spawner/Timer" to="Coin spawner/Timer" method="_on_timeout"]
